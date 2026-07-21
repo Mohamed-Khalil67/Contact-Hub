@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="navbar-actions">
-        <button class="btn btn-primary" id="addContactBtn" data-bs-toggle="modal" data-bs-target="#addContactModal">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContactModal">
           <i class="fas fa-plus"></i> Add Contact
         </button>
         <div class="nav-icons">
@@ -108,9 +108,7 @@
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search by name, phone, or email..." id="searchInput" />
           </div>
-          <div class="contacts-list" id="contactsList">
-            <div class="row g-3" id="rowData"></div>
-          </div>
+          <div class="row g-3" id="rowData"></div>
         </div>
       </div>
 
@@ -166,7 +164,7 @@
               <div class="contact-photo-preview">
                 <i class="fas fa-user"></i>
               </div>
-              <label for="photoInput" class="btn btn-secondary btn-sm" id="changePhotoBtn">
+              <label for="photoInput" class="btn btn-secondary btn-sm">
                 <i class="fas fa-camera"></i> Change Photo
               </label>
               <input type="file" id="photoInput" accept="image/*" style="display: none" />

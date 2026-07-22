@@ -1,3 +1,29 @@
+/* ============================================================================
+   ContactHub — stylesheet
+
+   Sections run from the most global to the most specific, so a rule's position
+   tells you what owns it. Each section keeps its own media queries, which means
+   everything that can affect a component is inside that component's section.
+
+     01. FONTS
+     02. DESIGN TOKENS
+     03. BASE / RESET
+     04. BUTTONS               shared by the navbar and the modal
+     05. BACKGROUND PATTERN
+     06. NAVBAR
+     07. DASHBOARD STAT CARDS
+     08. MAIN CONTENT + SEARCH
+     09. CONTACT CARDS
+     10. SIDEBAR
+     11. EMPTY STATES
+     12. MODAL + FORM
+     13. FORM VALIDATION       Bootstrap state overrides
+   ========================================================================== */
+
+/* ============================================================================
+   01. FONTS
+   ========================================================================== */
+
 /* Inter, self hosted so the page works with no internet.
    Google ships Inter as a variable font: one file per character subset
    covers every weight, which is why font-weight is a 100-900 range. */
@@ -12,6 +38,7 @@
     U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -23,6 +50,10 @@
     U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
     U+2215, U+FEFF, U+FFFD;
 }
+
+/* ============================================================================
+   02. DESIGN TOKENS
+   ========================================================================== */
 
 :root {
   --purple: #6366f1;
@@ -41,6 +72,10 @@
   --border-color: #e2e8f0;
 }
 
+/* ============================================================================
+   03. BASE / RESET
+   ========================================================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -51,7 +86,6 @@ body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--light-bg);
   color: var(--text-primary);
-  min-height: 100vh;
 }
 
 a {
@@ -83,7 +117,112 @@ button {
   cursor: pointer;
 }
 
-/* Navigation Bar */
+/* ============================================================================
+   04. BUTTONS
+   Shared by the navbar and the modal, so they live above both. Anything
+   button-shaped that is specific to one of those is in that section instead.
+   ========================================================================== */
+
+.btn-primary {
+  background: linear-gradient(to right, #7c3aed, #4f46e5);
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #7c3aed, #4f46e5);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary i {
+  margin-right: 0.5rem;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  border: none;
+  color: #374151;
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+  color: var(--text-primary);
+}
+
+.btn-secondary.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .btn-primary {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+}
+
+/* ============================================================================
+   05. BACKGROUND PATTERN
+   Three blurred colour washes on a fixed layer behind everything.
+   ========================================================================== */
+
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+}
+
+.blob-blue {
+  top: -160px;
+  right: -160px;
+  width: 320px;
+  height: 320px;
+  background: #dbeafe;
+  opacity: 0.5;
+}
+
+.blob-violet {
+  top: 50%;
+  left: -160px;
+  width: 384px;
+  height: 384px;
+  background: #ede9fe;
+  opacity: 0.4;
+}
+
+.blob-emerald {
+  bottom: -160px;
+  right: 33%;
+  width: 320px;
+  height: 320px;
+  background: #d1fae5;
+  opacity: 0.4;
+}
+
+/* ============================================================================
+   06. NAVBAR
+   ========================================================================== */
+
 .navbar {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
@@ -95,7 +234,11 @@ button {
   z-index: 40;
 }
 
-.navbar .container {
+/* container-md, not container: below 768px it stays full width so the header
+   keeps its space, from md up it matches the containers on the rest of the
+   page. Both classes together would not work - .container caps itself at 540px
+   from 576px up regardless of what .container-md says. */
+.navbar .container-md {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -148,23 +291,6 @@ button {
   gap: 0.75rem;
 }
 
-.btn-primary {
-  background: linear-gradient(to right, #7c3aed, #4f46e5);
-  border: none;
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 0.625rem 1.25rem;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(to right, #7c3aed, #4f46e5);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
-}
-
 .nav-icons {
   display: flex;
   align-items: center;
@@ -199,6 +325,58 @@ button {
   box-shadow: 0 0 0 2px #f1f5f9;
   cursor: pointer;
 }
+
+/* the title stays next to the logo - it is the only thing naming the page,
+   so only the tagline goes and the wordmark shrinks to pay for it */
+@media (max-width: 768px) {
+  .logo {
+    gap: 0.5rem;
+  }
+
+  .logo-main {
+    font-size: 20px;
+  }
+
+  .logo-tagline {
+    display: none;
+  }
+
+  .navbar-actions {
+    gap: 1rem;
+  }
+}
+
+/* Below sm the title shares the 80px row with the actions. Bootstrap's navbar
+   sets flex-wrap, so without trimming the actions the header wraps onto a
+   second row and spills out of its fixed height. The bell and cog are
+   decorative and the Add button keeps its icon, so nothing usable is lost.
+   Everything here is scoped to .navbar-actions so the modal buttons, which
+   share .btn-primary, keep their label and icon spacing. */
+@media (max-width: 575.98px) {
+  .nav-icons i {
+    display: none;
+  }
+
+  .navbar-actions {
+    gap: 0.75rem;
+  }
+
+  .navbar-actions .btn-label {
+    display: none;
+  }
+
+  .navbar-actions .btn-primary {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar-actions .btn-primary i {
+    margin-right: 0;
+  }
+}
+
+/* ============================================================================
+   07. DASHBOARD STAT CARDS
+   ========================================================================== */
 
 .dashboard-cards {
   padding-top: 2rem;
@@ -265,7 +443,16 @@ button {
   color: var(--text-primary);
 }
 
-/* Main Content */
+@media (max-width: 768px) {
+  .dashboard-cards {
+    padding-top: 1rem;
+  }
+}
+
+/* ============================================================================
+   08. MAIN CONTENT + SEARCH
+   ========================================================================== */
+
 .main-content {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -321,7 +508,19 @@ button {
   color: var(--text-secondary);
 }
 
-/* Contact Cards */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* ============================================================================
+   09. CONTACT CARDS
+   Shell, then avatar and badges, then the detail rows, then the tags, then the
+   action bar - the same order the markup is built in.
+   ========================================================================== */
+
 .contact-card {
   background: var(--white);
   border-radius: 16px;
@@ -337,14 +536,14 @@ button {
   flex-direction: column;
 }
 
-.contact-body {
-  padding: 1rem 1rem 0.75rem;
-  flex: 1;
-}
-
 .contact-card:hover {
   border-color: #e2e8f0;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.contact-body {
+  padding: 1rem 1rem 0.75rem;
+  flex: 1;
 }
 
 .contact-header {
@@ -364,15 +563,17 @@ button {
   font-size: 16px;
   color: white;
   position: relative;
+  /* overflow: hidden; */
 }
 
 .contact-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 12px;
 }
 
-/* Favorite Badge - Top Right */
+/* favorite badge, top right of the avatar */
 .contact-avatar.favorite::after {
   content: '\f005';
 
@@ -397,7 +598,7 @@ button {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
-/* Emergency Badge - Bottom Right */
+/* emergency badge, bottom right so the two never collide */
 .contact-avatar.emergency::before {
   content: '\f004';
   font-family: 'Font Awesome 6 Free';
@@ -435,7 +636,8 @@ button {
   text-overflow: ellipsis;
 }
 
-/* the phone sits under the name in the header, with a smaller chip */
+/* the phone sits under the name in the header, so its chip is smaller than
+   the ones in the detail list below */
 .contact-header .contact-detail.phone i {
   width: 24px;
   height: 24px;
@@ -454,6 +656,7 @@ button {
   margin-top: 0.75rem;
 }
 
+/* email and address are optional, so collapse the gap when neither rendered */
 .contact-details:empty {
   display: none;
 }
@@ -659,7 +862,12 @@ button {
   color: var(--red);
 }
 
-/* Sidebar */
+/* ============================================================================
+   10. SIDEBAR
+   The Favorites and Emergency panels. They share every rule and differ only by
+   :first-child / :last-child, which is what tints one amber and one red.
+   ========================================================================== */
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -742,40 +950,6 @@ button {
   padding: 0.75rem;
   max-height: 320px;
   overflow-y: auto;
-}
-
-.empty-state {
-  color: #a0aec0;
-  text-align: center;
-  padding: 2rem;
-  font-size: 14px;
-  width: 100%;
-}
-
-#rowData .empty-state {
-  padding: 4rem 2rem;
-}
-
-#rowData .empty-state i {
-  font-size: 42px;
-  color: #cbd5e0;
-  background: #f7fafc;
-  border-radius: 16px;
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
-#rowData .empty-state h4 {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 0.35rem;
-}
-
-#rowData .empty-state p {
-  font-size: 14px;
-  color: #a0aec0;
-  margin: 0;
 }
 
 .sidebar-contact-card {
@@ -870,7 +1044,51 @@ button {
   color: white;
 }
 
-/* Modal Styles */
+/* ============================================================================
+   11. EMPTY STATES
+   .empty-state is shared: the sidebar panels use the plain version, the main
+   grid gets the larger treatment through the #rowData rules.
+   ========================================================================== */
+
+.empty-state {
+  color: #a0aec0;
+  text-align: center;
+  padding: 2rem;
+  font-size: 14px;
+  width: 100%;
+}
+
+#rowData .empty-state {
+  padding: 4rem 2rem;
+}
+
+#rowData .empty-state i {
+  font-size: 42px;
+  color: #cbd5e0;
+  background: #f7fafc;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+#rowData .empty-state h4 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+#rowData .empty-state p {
+  font-size: 14px;
+  color: #a0aec0;
+  margin: 0;
+}
+
+/* ============================================================================
+   12. MODAL + FORM
+   The add / edit dialog, top to bottom: chrome, photo picker, fields, footer.
+   ========================================================================== */
+
 .modal-content {
   background: var(--white);
   border: none;
@@ -924,8 +1142,8 @@ button {
   margin: 0 auto 1rem;
   font-size: 48px;
   color: white;
-  border: none;
   position: relative;
+  /* overflow: hidden; */
 }
 
 .contact-photo-preview img {
@@ -933,28 +1151,6 @@ button {
   height: 100%;
   border-radius: 16px;
   object-fit: cover;
-}
-
-.btn-secondary {
-  background: #f1f5f9;
-  border: none;
-  color: #374151;
-  padding: 0.6rem 1.25rem;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background: #e2e8f0;
-  color: var(--text-primary);
-}
-
-.btn-secondary.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 14px;
-  margin-top: 0.5rem;
 }
 
 .form-group {
@@ -1044,6 +1240,8 @@ select.form-control {
   gap: 0.75rem;
 }
 
+/* beats .btn-primary / .btn-secondary on specificity, so Save, Update and
+   Cancel share one size no matter which button is showing */
 .modal-footer .btn {
   flex: 1;
   padding: 0.75rem 1.25rem;
@@ -1052,37 +1250,12 @@ select.form-control {
   font-weight: 600;
 }
 
-.btn-primary i {
-  margin-right: 0.5rem;
-}
+/* ============================================================================
+   13. FORM VALIDATION
+   Bootstrap's is-valid / is-invalid states, recoloured to our palette by
+   overriding its own variables rather than fighting its rules.
+   ========================================================================== */
 
-/* Responsive */
-@media (max-width: 768px) {
-  .logo-text {
-    display: none;
-  }
-
-  .navbar-actions {
-    gap: 1rem;
-  }
-
-  .btn-primary {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-  }
-
-  .dashboard-cards {
-    padding-top: 1rem;
-  }
-
-  .main-content {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-}
-
-/* Bootstrap's valid/invalid states, recoloured to our palette by overriding its
-   own variables rather than fighting its rules */
 #contactForm {
   --bs-form-valid-color: var(--green);
   --bs-form-valid-border-color: var(--green);
@@ -1107,46 +1280,4 @@ select.form-control {
 
 .form-control.is-invalid:focus {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-}
-
-/* Subtle Background Pattern - the three blurred colour washes */
-.bg-pattern {
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(64px);
-}
-
-.blob-blue {
-  top: -160px;
-  right: -160px;
-  width: 320px;
-  height: 320px;
-  background: #dbeafe;
-  opacity: 0.5;
-}
-
-.blob-violet {
-  top: 50%;
-  left: -160px;
-  width: 384px;
-  height: 384px;
-  background: #ede9fe;
-  opacity: 0.4;
-}
-
-.blob-emerald {
-  bottom: -160px;
-  right: 33%;
-  width: 320px;
-  height: 320px;
-  background: #d1fae5;
-  opacity: 0.4;
 }

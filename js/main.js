@@ -1,21 +1,3 @@
-/* ============================================================================
-   ContactHub
-
-   The file is split into layers and each layer only talks to the ones above
-   it, so a change stays where it belongs:
-
-     1. Config      constants, no logic
-     2. State       the only mutable data in the app
-     3. Store       localStorage + the list operations
-     4. Model       pure contact logic, never touches the DOM
-     5. Validation  form rules, returns errors instead of showing them
-     6. elements    every DOM element the app uses, looked up once
-     7. Alerts      SweetAlert wrappers, the only place popups are built
-     8. View        turns state into HTML
-     9. Actions     what a button does: change state, save, repaint
-    10. Init        event wiring and startup
-   ========================================================================== */
-
 // ===== 1. Config ============================================================
 
 const STORAGE_KEY = 'contacts';

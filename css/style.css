@@ -1,26 +1,4 @@
 /* ============================================================================
-   ContactHub — stylesheet
-
-   Sections run from the most global to the most specific, so a rule's position
-   tells you what owns it. Each section keeps its own media queries, which means
-   everything that can affect a component is inside that component's section.
-
-     01. FONTS
-     02. DESIGN TOKENS
-     03. BASE / RESET
-     04. BUTTONS               shared by the navbar and the modal
-     05. BACKGROUND PATTERN
-     06. NAVBAR
-     07. DASHBOARD STAT CARDS
-     08. MAIN CONTENT + SEARCH
-     09. CONTACT CARDS
-     10. SIDEBAR
-     11. EMPTY STATES
-     12. MODAL + FORM
-     13. FORM VALIDATION       Bootstrap state overrides
-   ========================================================================== */
-
-/* ============================================================================
    01. FONTS
    ========================================================================== */
 
